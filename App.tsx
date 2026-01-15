@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Brain, GraduationCap, ChevronRight, RefreshCcw, CheckCircle, XCircle, ArrowUp, ArrowDown, Minus, ArrowRight, Lightbulb } from 'lucide-react';
+import { Book, Brain, GraduationCap, ChevronRight, RefreshCcw, CheckCircle, XCircle, ArrowUp, ArrowDown, Minus, ArrowRight, Lightbulb, Phone, Briefcase, MessageCircle, Layers } from 'lucide-react';
 import { KEIGO_DB, getRandomQuestions } from './data';
-import { AppMode, Question, TestResult } from './types';
+import { AppMode, Question, TestResult, QuestionCategory } from './types';
 
 // --- Sub-Components ---
 
@@ -89,7 +89,7 @@ const MenuScreen = ({ onSelectMode }: { onSelectMode: (mode: AppMode) => void })
               </div>
               <div>
                 <h3 className="text-lg font-bold text-slate-900">【特訓ドリル】</h3>
-                <p className="text-sm text-slate-500 mt-1">ランダムに出題します。間違えても大丈夫ですよ。</p>
+                <p className="text-sm text-slate-500 mt-1">苦手なシーンを選んで、何度でも練習できます。</p>
               </div>
             </div>
             <ChevronRight className="text-slate-300 group-hover:text-pink-400 transition-colors" />
@@ -385,10 +385,90 @@ const QuizCard = ({
 };
 
 const DrillMode = ({ onFinish }: { onFinish: () => void }) => {
+  const [step, setStep] = useState<'select' | 'quiz'>('select');
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQIndex, setCurrentQIndex] = useState(0);
-  const [questions] = useState(() => getRandomQuestions(100)); // Load all shuffled
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
 
+  const startDrill = (categories: QuestionCategory[] | null) => {
+    // If null, allow all categories
+    const selectedQuestions = getRandomQuestions(100, categories || undefined);
+    setQuestions(selectedQuestions);
+    setStep('quiz');
+    setCurrentQIndex(0);
+    setFeedback(null);
+  };
+
+  if (step === 'select') {
+    return (
+      <div className="max-w-2xl mx-auto px-6 py-12 fade-in">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl font-bold text-slate-900 mb-4">特訓コースを選んでください</h2>
+          <p className="text-slate-600">苦手なシーンを重点的に練習しましょう。</p>
+        </div>
+
+        <div className="grid gap-4">
+           {/* Course 1: Basics */}
+           <button 
+            onClick={() => startDrill(['verbs', 'terms'])}
+            className="flex items-center p-6 bg-white border border-slate-200 rounded-xl hover:border-pink-400 hover:shadow-md transition-all"
+          >
+            <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mr-4">
+              <Book size={24} />
+            </div>
+            <div className="text-left">
+              <h3 className="font-bold text-slate-900">🔰 基礎・用語コース</h3>
+              <p className="text-sm text-slate-500">敬語変換と用語の基本をチェック</p>
+            </div>
+          </button>
+
+          {/* Course 2: Internal */}
+          <button 
+            onClick={() => startDrill(['internal'])}
+            className="flex items-center p-6 bg-white border border-slate-200 rounded-xl hover:border-pink-400 hover:shadow-md transition-all"
+          >
+             <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-4">
+              <Briefcase size={24} />
+            </div>
+            <div className="text-left">
+              <h3 className="font-bold text-slate-900">🏢 社内・上司対応コース</h3>
+              <p className="text-sm text-slate-500">上司への報告・連絡・相談など</p>
+            </div>
+          </button>
+
+          {/* Course 3: Client & Phone */}
+          <button 
+            onClick={() => startDrill(['client', 'three-party'])}
+            className="flex items-center p-6 bg-white border border-slate-200 rounded-xl hover:border-pink-400 hover:shadow-md transition-all"
+          >
+            <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mr-4">
+              <Phone size={24} />
+            </div>
+            <div className="text-left">
+              <h3 className="font-bold text-slate-900">📞 電話・来客対応コース</h3>
+              <p className="text-sm text-slate-500">お客様対応と三者間の敬語</p>
+            </div>
+          </button>
+
+          {/* Course 4: All */}
+          <button 
+            onClick={() => startDrill(null)}
+            className="flex items-center p-6 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl shadow-lg hover:from-pink-600 hover:to-rose-600 transition-all"
+          >
+             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
+              <Layers size={24} />
+            </div>
+            <div className="text-left">
+              <h3 className="font-bold">🔥 総合特訓コース</h3>
+              <p className="text-sm text-white/90">全ジャンルからランダムに出題</p>
+            </div>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Quiz View
   const currentQ = questions[currentQIndex];
 
   const handleAnswer = (ans: string) => {
@@ -406,8 +486,10 @@ const DrillMode = ({ onFinish }: { onFinish: () => void }) => {
 
   return (
     <div>
-      <div className="text-center py-4 bg-blue-50">
-        <p className="text-blue-800 font-bold text-sm">特訓モード：ゆっくり頑張りましょう</p>
+      <div className="text-center py-4 bg-blue-50 flex justify-between px-6 items-center">
+        <button onClick={onFinish} className="text-xs text-blue-500 hover:underline">コース選択へ戻る</button>
+        <span className="text-blue-800 font-bold text-sm">特訓中...</span>
+        <div className="w-8"></div>
       </div>
       <QuizCard 
         question={currentQ} 

@@ -1,4 +1,4 @@
-import { Question } from './types';
+import { Question, QuestionCategory } from './types';
 
 // Helper to shuffle options array
 const shuffle = <T>(array: T[]): T[] => {
@@ -6,395 +6,402 @@ const shuffle = <T>(array: T[]): T[] => {
 };
 
 // Database Content
-// Based strictly on the provided text.
+// 問題文の頭に【場面】タグを追加し、状況を瞬時に理解できるように改善。
 
 export const KEIGO_DB: Question[] = [
-  // ① 社内の上司・先輩対応
+  // ① 社内の上司・先輩対応 (Category: internal)
   {
     id: 101,
     category: 'internal',
-    questionText: "上司（部長）に対して、仕事が終わった際の挨拶として適切なのは？",
-    context: "NG例：部長、ご苦労様です",
-    options: ["部長、ご苦労様です", "部長、お疲れさまです"],
-    correctAnswer: "部長、お疲れさまです",
-    reason: "「ご苦労様」は目上が目下に使う。上司には「お疲れ様」",
-    visualCue: { direction: 'up', target: '部長（上司）' }
+    questionText: "【社内・退社時】まだ残業している上司（部長）に声をかけて先に帰る際、適切な挨拶は？",
+    context: "目上の人に対して「苦労」をねぎらう言葉を使うのは適切でしょうか。",
+    options: ["部長、ご苦労様でした", "部長、お先に失礼いたします"],
+    correctAnswer: "部長、お先に失礼いたします",
+    reason: "「ご苦労様」は目上が目下に使う言葉。本来は「お疲れ様」だが、先に帰る場合は「お先に失礼します」がマナー。",
+    visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 102,
     category: 'internal',
-    questionText: "「お客様が来た」ことを上司に伝える正しい表現は？",
-    context: "NG例：お客様がまいりました",
-    options: ["お客様がまいりました", "お客様がお見えになりました"],
+    questionText: "【社内】受付にお客様が到着されました。社内にいる担当の上司に取り次ぐ際、どう伝えますか？",
+    context: "「参る」は謙譲語（自分の動作）です。お客様の動作に使うとどうなるでしょう？",
+    options: ["お客様が参られました", "お客様がお見えになりました"],
     correctAnswer: "お客様がお見えになりました",
-    reason: "「参る」は自分の謙譲語。お客様は上げるので尊敬語「お見えになる」",
+    reason: "「参る」は謙譲語なのでお客様には使わない。「参られる」も誤用。「お見えになる」や「お越しになる」が正解。",
     visualCue: { direction: 'up', target: 'お客様' }
   },
   {
     id: 103,
     category: 'internal',
-    questionText: "上司に資料を見てほしい時の正しい表現は？",
-    context: "NG例：資料を見てください",
-    options: ["資料を見てください", "資料をご覧ください"],
-    correctAnswer: "資料をご覧ください",
-    reason: "「見てください」は命令的。尊敬語「ご覧になる」を使う",
+    questionText: "【社内】上司に書類の内容を確認してほしい時、手渡しながら何と言いますか？",
+    context: "「拝見する」は謙譲語（自分が見る）です。上司に見てもらいたい場合は尊敬語を使います。",
+    options: ["こちらの資料を拝見してください", "こちらの資料をご覧ください"],
+    correctAnswer: "こちらの資料をご覧ください",
+    reason: "「拝見する」は自分が見ること。「ご覧になる」が尊敬語。",
     visualCue: { direction: 'up', target: '上司' }
   },
   {
     id: 104,
     category: 'internal',
-    questionText: "報告が遅れたことを上司に謝罪する場合、より適切なのは？",
-    context: "△例：報告が遅れてすみません",
-    options: ["報告が遅れてすみません", "ご報告が遅くなり申し訳ございません"],
+    questionText: "【社内】報告が遅れてしまい、上司に謝罪する場合。より誠意が伝わるのは？",
+    context: "「すみません」は口語的で軽い印象を与えます。",
+    options: ["ご報告が遅れてすみませんでした", "ご報告が遅くなり申し訳ございません"],
     correctAnswer: "ご報告が遅くなり申し訳ございません",
-    reason: "上司への謝罪に「すみません」は軽い。「申し訳ございません」を使う",
+    reason: "ビジネスでの謝罪は「申し訳ございません」が基本。「すみません」は避ける。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 105,
     category: 'internal',
-    questionText: "上司に「携帯電話に連絡してほしい」と伝える丁寧な表現は？",
-    context: "△例：携帯電話に連絡してください",
-    options: ["携帯電話に連絡してください", "携帯電話へご連絡ください"],
-    correctAnswer: "携帯電話へご連絡ください",
-    reason: "「あったら」は口語。「ございましたら」で丁寧さを上げる",
+    questionText: "【電話・社内】外出中の上司の携帯に電話をかけ、「後で折り返してほしい」と伝言を残す場合。",
+    context: "「してください」は丁寧語ですが、命令のニュアンスが含まれます。より依頼の形にしましょう。",
+    options: ["後ほど携帯電話にご連絡ください", "後ほど携帯電話へご連絡いただけますか"],
+    correctAnswer: "後ほど携帯電話へご連絡いただけますか",
+    reason: "「〜ください」は指示・命令に聞こえる場合がある。「〜いただけますか」と依頼形で尋ねるのがベター。",
     visualCue: { direction: 'up', target: '上司' }
   },
   {
     id: 106,
     category: 'internal',
-    questionText: "お客様の発言を上司に伝える際、適切なのは？",
-    context: "NG例：お客様がいうには",
-    options: ["お客様がいうには", "お客様のお話では／とのことです"],
-    correctAnswer: "お客様のお話では／とのことです",
-    reason: "お客様に「言う」は失礼。クッション言葉を使う",
+    questionText: "【社内】お客様（田中様）の発言内容を、社内の上司に報告する際の表現は？",
+    context: "「申す」は謙譲語です。お客様の言動に対しては尊敬語を使います。",
+    options: ["田中様がそのように申しておりました", "田中様がそのようにおっしゃっていました"],
+    correctAnswer: "田中様がそのようにおっしゃっていました",
+    reason: "「申す」は自分や身内の発言に使う謙譲語。お客様の発言は「おっしゃる」。",
     visualCue: { direction: 'up', target: 'お客様' }
   },
   {
     id: 107,
     category: 'internal',
-    questionText: "社外の人（中本さん）からの連絡を伝える正しい表現は？",
-    context: "NG例：中本さんが今日来ると言っていました",
-    options: ["中本さんが今日来ると言っていました", "中本さんからお電話があり、本日お越しになるとのことでした"],
-    correctAnswer: "中本さんからお電話があり、本日お越しになるとのことでした",
-    reason: "社外の人は上げる。「言っていました」は口語すぎる",
+    questionText: "【社内】社外の人（中本様）からの電話を上司に取り次ぐ際、相手が「これから行く」と言っていたことを伝えるには？",
+    context: "社外の人の動作なので尊敬語を使います。「来る」の尊敬語を選びましょう。",
+    options: ["中本様が本日参られるそうです", "中本様が本日お越しになるそうです"],
+    correctAnswer: "中本様が本日お越しになるそうです",
+    reason: "「参る」はお客様には使わない。「お越しになる」「お見えになる」を使う。",
     visualCue: { direction: 'up', target: '社外の人' }
   },
 
-  // ② 三者間対応
+  // ② 三者間対応 (Category: three-party)
   {
     id: 201,
     category: 'three-party',
-    questionText: "取引先（鈴木様）に、自社の上司（山本部長）を紹介する場合、正しいのは？",
-    context: "CASE 1：取引先に自社の上司（部長）を紹介",
+    questionText: "【応接室】取引先の鈴木様に対して、自社の上司である「山本部長」を紹介する場合、正しいのは？",
+    context: "社外の人に対しては、自社の上司であっても「身内」として扱い、敬称を外します。",
     options: [
-      "鈴木さん、紹介します。うちの会社の営業部の山本部長です。",
-      "鈴木様、ご紹介いたします。こちらが、弊社営業部の山本でございます。"
+      "弊社の山本部長をご紹介いたします",
+      "弊社営業部長の山本をご紹介いたします"
     ],
-    correctAnswer: "鈴木様、ご紹介いたします。こちらが、弊社営業部の山本でございます。",
-    reason: "お客様を立てる。自社の上司でもお客様の前では呼び捨てにし、身内として下げる",
+    correctAnswer: "弊社営業部長の山本をご紹介いたします",
+    reason: "社外の人に対して自社の人間を呼ぶ際、役職名（部長など）は名前の後ろにつけず、「部長の山本」とするか呼び捨てにする。",
     visualCue: { direction: 'down', target: '自社の上司' }
   },
+
   {
     id: 202,
     category: 'three-party',
-    questionText: "自社の上司に、取引先（山田さん）を紹介する場合、正しいのは？",
-    context: "CASE 2：上司に取引先（山田さん）を紹介",
+    questionText: "【社内】自社の上司に、来社した取引先の山田さんを紹介する場合。",
+    context: "上司に対してであっても、お客様は「最上位」の存在です。",
     options: [
-      "こちらが、株式会社りそな商事の山田さんでございます",
-      "こちらが、株式会社りそな商事の山田様でいらっしゃいます"
+      "こちらがりそな商事の山田様でございます",
+      "こちらがりそな商事の山田様でいらっしゃいます"
     ],
-    correctAnswer: "こちらが、株式会社りそな商事の山田様でいらっしゃいます",
-    reason: "山田様はお客様なので尊敬語。「でございます」は自分側に使う言葉。「でいらっしゃいます」が正解",
+    correctAnswer: "こちらがりそな商事の山田様でいらっしゃいます",
+    reason: "「ございます」は丁寧語だが、紹介の場面では「〜だ」の意。お客様には尊敬語の「いらっしゃる」を使う。",
     visualCue: { direction: 'up', target: '取引先（お客様）' }
   },
 
-  // ③ お客様対応 言い換え単語帳
+  // ③ お客様対応 (Category: client)
   {
     id: 301,
     category: 'client',
-    questionText: "「うちの会社」の正しい言い換えは？",
-    options: ["うちの会社", "弊社／当社"],
-    correctAnswer: "弊社／当社",
-    reason: "ビジネスシーンでは「弊社」または「当社」を用いる",
+    questionText: "【商談】お客様に対して、自分の会社のことを話す際の一人称は？",
+    context: "「当社」は丁寧ですが、対等な関係のニュアンスがあります。相手を立てる場合は？",
+    options: ["当社といたしましては", "弊社といたしましては"],
+    correctAnswer: "弊社といたしましては",
+    reason: "相手を立ててへりくだる場合は「弊社（へいしゃ）」を使う。「当社」は社内や対等な場面で使う。",
     visualCue: { direction: 'down', target: '自社' }
   },
   {
     id: 302,
     category: 'client',
-    questionText: "「あなたは誰ですか」の正しい言い換えは？",
-    options: ["失礼ですが、どちら様でしょうか。", "あなたは誰ですか"],
-    correctAnswer: "失礼ですが、どちら様でしょうか。",
-    reason: "相手の身元を尋ねる際は最大の配慮を。",
+    questionText: "【受付】来客の名前が聞き取れませんでした。失礼のないように尋ねるには？",
+    context: "直球で名前を聞くのは失礼です。「クッション言葉」を挟みましょう。",
+    options: ["お名前を頂戴できますか？", "失礼ですが、どちら様でしょうか？"],
+    correctAnswer: "失礼ですが、どちら様でしょうか？",
+    reason: "「お名前を頂戴する」は過剰敬語（名前はもらえない）。「失礼ですが、どちら様でしょうか」が定型。",
     visualCue: { direction: 'up', target: '相手' }
   },
   {
     id: 303,
     category: 'client',
-    questionText: "「席にいません」の正しい言い換えは？",
-    options: ["席にいません", "席を外しております。"],
-    correctAnswer: "席を外しております。",
-    reason: "事実を伝える際も丁寧語・謙譲語を用いる",
+    questionText: "【電話】指名された担当者が不在でした。お客様にその旨を伝える場合。",
+    context: "「いない」を丁寧にしつつ、事実を伝えます。",
+    options: ["あいにく席を外しております", "あいにく席におりません"],
+    correctAnswer: "あいにく席を外しております",
+    reason: "「席を外す」という慣用句を使うのがビジネスの基本。「おりません」だけだと、外出か休みか曖昧。",
     visualCue: { direction: 'down', target: '身内' }
   },
   {
     id: 304,
     category: 'client',
-    questionText: "「すみませんが」のより丁寧な言い換えは？",
-    options: ["すみませんが", "恐れ入りますが／申し訳ございませんが"],
-    correctAnswer: "恐れ入りますが／申し訳ございませんが",
-    reason: "クッション言葉として機能させるため",
+    questionText: "【商談・電話】お客様に何かを依頼する際、冒頭につける「クッション言葉」として最適なのは？",
+    context: "相手に手間をかけさせることを詫びる言葉を選びます。",
+    options: ["ご苦労をおかけしますが", "お手数をおかけしますが"],
+    correctAnswer: "お手数をおかけしますが",
+    reason: "「ご苦労」は目下に使う言葉。「お手数」が適切。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 305,
     category: 'client',
-    questionText: "「すぐにいきます」の正しい言い換えは？",
-    options: ["すぐにいきます", "ただいま参ります。"],
-    correctAnswer: "ただいま参ります。",
-    reason: "「行く」の謙譲語は「参る」",
+    questionText: "【電話】お客様の会社まで「行く」と伝える際の謙譲表現は？",
+    context: "「行く」の謙譲語を選びます。",
+    options: ["そちらへ参上いたします", "そちらへ伺います／参ります"],
+    correctAnswer: "そちらへ伺います／参ります",
+    reason: "「参上する」は時代がかった表現で、通常のビジネスでは「伺う」や「参る」を使う。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 306,
     category: 'client',
-    questionText: "「なんのようですか」の正しい言い換えは？",
-    options: ["なんのようですか", "どのようなご用件でしょうか。"],
-    correctAnswer: "どのようなご用件でしょうか。",
-    reason: "用件を伺う際の定型表現",
+    questionText: "【受付】お客様に「何の用ですか？」と尋ねるのは失礼です。正しい表現は？",
+    context: "用件を丁寧に聞く表現を選びます。",
+    options: ["どのようなご用件でしょうか", "どういったご用向きでしょうか"],
+    correctAnswer: "どのようなご用件でしょうか",
+    reason: "「ご用向き」も間違いではないが、現代の口語では「ご用件」が一般的で自然。",
     visualCue: { direction: 'up', target: '相手' }
   },
   {
     id: 307,
     category: 'client',
-    questionText: "「明日、またきてください」の正しい言い換えは？",
-    options: ["明日、またきてください", "恐れ入りますが、明日改めてお越しいただけますでしょうか。"],
-    correctAnswer: "恐れ入りますが、明日改めてお越しいただけますでしょうか。",
-    reason: "依頼形かつ尊敬語「お越しいただく」を使う",
+    questionText: "【電話】アポイントの日程を変更してもらい、再度来てもらうよう依頼する場合。",
+    context: "「来てほしい」を最大限丁寧に依頼します。",
+    options: ["改めてお越しいただけますでしょうか", "改めて参っていただけますでしょうか"],
+    correctAnswer: "改めてお越しいただけますでしょうか",
+    reason: "「参る」は謙譲語なので相手の動作には使わない。「お越しいただく」が正解。",
     visualCue: { direction: 'up', target: '相手' }
   },
   {
     id: 308,
     category: 'client',
-    questionText: "「もう一度言ってください」の正しい言い換えは？",
-    options: ["もう一度言ってください", "お手数ですが、もう一度お伺いしてもよろしいでしょうか。"],
-    correctAnswer: "お手数ですが、もう一度お伺いしてもよろしいでしょうか。",
-    reason: "相手に手間を取らせるため「お手数ですが」をつけ、「聞く」の謙譲語「伺う」を使う",
+    questionText: "【電話】相手の声が遠くて聞こえにくい時、もう一度言ってもらうには？",
+    context: "相手のせいにするのではなく、「自分の聞き取り」の問題として伝えます。",
+    options: ["お電話が遠いようなのですが", "お声が小さいようなのですが"],
+    correctAnswer: "お電話が遠いようなのですが",
+    reason: "「声が小さい」と指摘するのは失礼。「電話が遠い」という慣用句を使う。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 309,
     category: 'client',
-    questionText: "「営業部の田中さんはいますか」と聞かれた時の正しい返答は？",
-    options: ["営業部の田中さんはいますか", "営業部の田中はおりますでしょうか。"],
-    correctAnswer: "営業部の田中はおりますでしょうか。",
-    reason: "身内（田中）を下げるため呼び捨てにし、「いる」の謙譲語「おる」を使う",
+    questionText: "【電話】お客様に「田中さんはいますか？」と聞かれ、田中がいる場合の返答。",
+    context: "身内（田中）のことを聞かれています。「いる」の謙譲語を使います。",
+    options: ["はい、田中はいらっしゃいます", "はい、田中はただいまおります"],
+    correctAnswer: "はい、田中はただいまおります",
+    reason: "身内に「いらっしゃる（尊敬語）」は使わない。「おる（謙譲語）」を使う。",
     visualCue: { direction: 'down', target: '身内' }
   },
   {
     id: 310,
     category: 'client',
-    questionText: "「山田は今、会議中です」の正しい言い換えは？",
-    options: ["山田は今、会議中です", "山田は現在、会議中でございます。"],
-    correctAnswer: "山田は現在、会議中でございます。",
-    reason: "丁寧語「ございます」で状況を説明する",
+    questionText: "【電話】お客様に「佐藤課長は会議中です」と伝える場合。",
+    context: "身内の役職者への敬称は外します。状態説明は丁寧語で。",
+    options: ["佐藤課長は会議中でございます", "課長の佐藤は会議中でございます"],
+    correctAnswer: "課長の佐藤は会議中でございます",
+    reason: "社外の人に対して「佐藤課長」と呼ぶのはNG。「課長の佐藤」または「佐藤」と呼ぶ。",
     visualCue: { direction: 'down', target: '状況' }
   },
   {
     id: 311,
     category: 'client',
-    questionText: "「都合を聞きたいのですが」の正しい言い換えは？",
-    options: ["都合を聞きたいのですが", "ご都合をお伺いしたいのですが。"],
-    correctAnswer: "ご都合をお伺いしたいのですが。",
-    reason: "「聞く」の謙譲語「伺う」を使う",
+    questionText: "【電話】日程調整のため、相手の都合が良い日時を聞きたい時。",
+    context: "「聞く」の謙譲語を使います。",
+    options: ["ご都合をお聞きしたいのですが", "ご都合をお伺いしたいのですが"],
+    correctAnswer: "ご都合をお伺いしたいのですが",
+    reason: "「お聞きする」よりも「お伺いする」の方が、よりへりくだった丁寧な印象を与える。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 312,
     category: 'client',
-    questionText: "「わかりました。担当者に言っておきます」の正しい言い換えは？",
-    options: ["わかりました。担当者に言っておきます", "承知いたしました。担当者に申し伝えます。"],
-    correctAnswer: "承知いたしました。担当者に申し伝えます。",
-    reason: "「わかる」→「承知する」、「言う」→「申し伝える」（謙譲語）",
+    questionText: "【電話】お客様からの依頼を了承し、「担当者に伝える」と言う場合。",
+    context: "「言う」の謙譲語を使います。",
+    options: ["担当者に申しておきます", "担当者に申し伝えます"],
+    correctAnswer: "担当者に申し伝えます",
+    reason: "伝言を取り次ぐ場合は「申し伝える」が定型表現。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 313,
     category: 'client',
-    questionText: "「うちの会社の鈴木から話は聞いています」の正しい言い換えは？",
-    options: ["うちの会社の鈴木から話は聞いています", "弊社の鈴木よりお話は伺っております。"],
-    correctAnswer: "弊社の鈴木よりお話は伺っております。",
-    reason: "「聞いている」の謙譲語「伺っております」",
+    questionText: "【商談】「弊社の鈴木から、話は聞いています」とお客様に伝える場合。",
+    context: "身内から聞いた話であっても、お客様に関する内容を聞いた（拝聴した）というニュアンスを含めます。",
+    options: ["鈴木から伺っております", "鈴木からお聞きしています"],
+    correctAnswer: "鈴木から伺っております",
+    reason: "「聞く」の謙譲語「伺う」を使うことで、話題の主であるお客様への敬意を示す。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 314,
     category: 'client',
-    questionText: "「担当者が来ますので、ちょっと待ってください」の正しい言い換えは？",
-    options: ["担当者が来ますので、ちょっと待ってください", "担当者がまいりますので、少々お待ちいただけますでしょうか。"],
-    correctAnswer: "担当者がまいりますので、少々お待ちいただけますでしょうか。",
-    reason: "「来る」の謙譲語「まいる」、「待って」の尊敬語依頼「お待ちいただけますでしょうか」",
+    questionText: "【応接室】担当者が来るまで少し待っていてほしいと伝える場合。",
+    context: "「待ってくれ」は命令形です。丁寧な依頼形にします。",
+    options: ["少々お待ち願えますか", "少々お待ちいただけますでしょうか"],
+    correctAnswer: "少々お待ちいただけますでしょうか",
+    reason: "「お待ち願えますか」よりも「お待ちいただけますでしょうか」の方がより丁寧で柔らかい。",
     visualCue: { direction: 'down', target: '身内' }
   },
 
-  // ④ 呼称・立場マスター
+  // ④ 呼称・立場マスター (Category: terms)
   {
     id: 401,
     category: 'terms',
-    questionText: "自分からお客様に対して、自分のことを何と呼ぶ？",
-    options: ["私（わたし）", "私（わたくし）"],
-    correctAnswer: "私（わたくし）",
-    reason: "ビジネスシーンでは「わたくし」が正式",
+    questionText: "【用語】ビジネスの場での一人称。「わたし」よりもフォーマルな言い方は？",
+    context: "男女問わず使える、最も改まった一人称です。",
+    options: ["わたくし", "自分"],
+    correctAnswer: "わたくし",
+    reason: "「自分」は少し体育会系・カジュアルな印象。「わたくし」がビジネス標準。",
     visualCue: { direction: 'down', target: '自分' }
-  },
-  {
-    id: 402,
-    category: 'terms',
-    questionText: "自分からお客様に対して、自社のことを何と呼ぶ？",
-    options: ["うちの会社", "弊社（へいしゃ）or 当社"],
-    correctAnswer: "弊社（へいしゃ）or 当社",
-    reason: "「弊社」はへりくだる表現。「当社」は丁寧な表現",
-    visualCue: { direction: 'down', target: '自社' }
-  },
-  {
-    id: 403,
-    category: 'terms',
-    questionText: "自社内で、自社のことを何と呼ぶ？",
-    options: ["弊社", "当社／うち"],
-    correctAnswer: "当社／うち",
-    reason: "社内ではへりくだる必要がないため",
-    visualCue: { direction: 'flat', target: '自社' }
   },
   {
     id: 404,
     category: 'terms',
-    questionText: "会話の中で、相手の会社を何と呼ぶ？",
-    options: ["貴社（きしゃ）", "御社（おんしゃ）"],
+    questionText: "【用語】面接や商談など、「話し言葉」で相手の会社を呼ぶときは？",
+    context: "書き言葉（メール）と話し言葉（会話）で使い分けます。",
+    options: ["御社（おんしゃ）", "貴社（きしゃ）"],
     correctAnswer: "御社（おんしゃ）",
-    reason: "話し言葉（会話）では「御社」",
-    visualCue: { direction: 'up', target: '相手の会社' }
-  },
-  {
-    id: 405,
-    category: 'terms',
-    questionText: "メールや文書の中で、相手の会社を何と呼ぶ？",
-    options: ["貴社（きしゃ）", "御社（おんしゃ）"],
-    correctAnswer: "貴社（きしゃ）",
-    reason: "書き言葉（文章）では「貴社」",
+    reason: "会話では「御社」。メールや履歴書などの文書では「貴社」を使う。",
     visualCue: { direction: 'up', target: '相手の会社' }
   },
 
-  // ⑤ 敬語変換マトリクス（基本動詞）
+  // ⑤ 敬語変換マトリクス（基本動詞） (Category: verbs)
   {
     id: 501,
     category: 'verbs',
-    questionText: "「行く」の尊敬語（相手が↑）は？",
-    options: ["参る", "いらっしゃる／おいでになる"],
-    correctAnswer: "いらっしゃる／おいでになる",
-    reason: "相手が行く場合は尊敬語。",
+    questionText: "【敬語変換】お客様が「行く」ことを尊敬語で表現すると？",
+    context: "相手を高める表現です。「参る」は自分がへりくだる言葉です。",
+    options: ["参られる", "いらっしゃる"],
+    correctAnswer: "いらっしゃる",
+    reason: "「参る」は謙譲語。「参られる」という言葉は誤用。「いらっしゃる」や「おいでになる」が正解。",
     visualCue: { direction: 'up', target: '相手' }
   },
   {
     id: 502,
     category: 'verbs',
-    questionText: "「行く」の謙譲語（自分が↓）は？",
-    options: ["参る／伺う", "いらっしゃる"],
-    correctAnswer: "参る／伺う",
-    reason: "自分が行く場合は謙譲語。",
+    questionText: "【敬語変換】自分が「行く」ことを謙譲語で表現すると？",
+    context: "自分を低める表現です。「いらっしゃる」は相手に使います。",
+    options: ["伺う／参る", "行かれる"],
+    correctAnswer: "伺う／参る",
+    reason: "「行かれる」は尊敬語（れる・られる）。自分の動作には「参る」や「伺う」を使う。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 503,
     category: 'verbs',
-    questionText: "「来る」の尊敬語（相手が↑）は？",
-    options: ["お越しになる／お見えになる", "参る"],
-    correctAnswer: "お越しになる／お見えになる",
-    reason: "相手が来る場合は尊敬語。",
+    questionText: "【敬語変換】お客様が「来る」ことを尊敬語で表現すると？",
+    context: "「来る」の尊敬語は複数あります。",
+    options: ["お見えになられる", "お見えになる"],
+    correctAnswer: "お見えになる",
+    reason: "「お見えになられる」は二重敬語（お〜なる＋れる）。「お見えになる」だけで尊敬語として成立している。",
     visualCue: { direction: 'up', target: '相手' }
   },
   {
     id: 504,
     category: 'verbs',
-    questionText: "「言う」の尊敬語（相手が↑）は？",
-    options: ["申し上げる", "おっしゃる"],
+    questionText: "【敬語変換】お客様が「言う」ことを尊敬語で表現すると？",
+    context: "「申す」は謙譲語です。",
+    options: ["おっしゃられる", "おっしゃる"],
     correctAnswer: "おっしゃる",
-    reason: "相手が言う場合は尊敬語。",
+    reason: "「おっしゃられる」は二重敬語（おっしゃる＋れる）。「おっしゃる」が正解。",
     visualCue: { direction: 'up', target: '相手' }
   },
   {
     id: 505,
     category: 'verbs',
-    questionText: "「言う」の謙譲語（自分が↓）は？",
-    options: ["おっしゃる", "申す／申し上げる"],
+    questionText: "【敬語変換】自分が「言う」ことを謙譲語で表現すると？",
+    context: "相手に対して自分が発言する場合です。",
+    options: ["申される", "申す／申し上げる"],
     correctAnswer: "申す／申し上げる",
-    reason: "自分が言う場合は謙譲語。",
+    reason: "「申される」は尊敬語の形だが動詞が謙譲語で不自然。素直に「申す」を使う。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 506,
     category: 'verbs',
-    questionText: "「聞く」の謙譲語（自分が↓）は？",
-    options: ["お聞きになる", "伺う／承る"],
-    correctAnswer: "伺う／承る",
-    reason: "自分が聞く（引き受ける）場合は謙譲語。",
+    questionText: "【敬語変換】自分が相手の話を「聞く」ことを謙譲語で表現すると？",
+    context: "「お聞きする」よりも改まった表現があります。",
+    options: ["拝聴いたす", "承る／伺う"],
+    correctAnswer: "承る／伺う",
+    reason: "「拝聴いたす」も間違いではないが、通常会話では「承る（うけたまわる）」や「伺う」が一般的。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 507,
     category: 'verbs',
-    questionText: "「見る」の尊敬語（相手が↑）は？",
-    options: ["拝見する", "ご覧になる"],
+    questionText: "【敬語変換】お客様が資料を「見る」ことを尊敬語で表現すると？",
+    context: "「拝見」は自分が見ることです。",
+    options: ["ご覧になられる", "ご覧になる"],
     correctAnswer: "ご覧になる",
-    reason: "相手が見る場合は尊敬語。",
+    reason: "「ご覧になられる」は二重敬語。「ご覧になる」で十分敬意を表せる。",
     visualCue: { direction: 'up', target: '相手' }
   },
   {
     id: 508,
     category: 'verbs',
-    questionText: "「見る」の謙譲語（自分が↓）は？",
-    options: ["拝見する", "ご覧になる"],
+    questionText: "【敬語変換】自分が資料を「見る」ことを謙譲語で表現すると？",
+    context: "「ご覧になる」は相手が見ることです。",
+    options: ["拝見する", "見させていただく"],
     correctAnswer: "拝見する",
-    reason: "自分が見る場合は謙譲語。",
+    reason: "「拝見する」という専用の謙譲語があるため、「見させていただく」よりもスマート。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 509,
     category: 'verbs',
-    questionText: "「食べる」の尊敬語（相手が↑）は？",
-    options: ["いただく", "召し上がる"],
+    questionText: "【敬語変換】お客様が食事を「食べる」ことを尊敬語で表現すると？",
+    context: "「いただく」は自分が食べる時の言葉です。",
+    options: ["召し上がる", "いただかれる"],
     correctAnswer: "召し上がる",
-    reason: "相手が食べる場合は尊敬語。",
+    reason: "「いただく」は謙譲語。「召し上がる」が尊敬語。",
     visualCue: { direction: 'up', target: '相手' }
   },
   {
     id: 510,
     category: 'verbs',
-    questionText: "「食べる」の謙譲語（自分が↓）は？",
-    options: ["いただく", "召し上がる"],
+    questionText: "【敬語変換】自分が食事を「食べる」ことを謙譲語で表現すると？",
+    context: "食事の挨拶としても使われる言葉です。",
+    options: ["いただく", "頂戴する"],
     correctAnswer: "いただく",
-    reason: "自分が食べる場合は謙譲語。",
+    reason: "「頂戴する」は「もらう」の謙譲語。「食べる」の謙譲語は「いただく」。",
     visualCue: { direction: 'down', target: '自分' }
   },
   {
     id: 511,
     category: 'verbs',
-    questionText: "「知っている」の尊敬語（相手が↑）は？",
-    options: ["ご存じだ", "存じている"],
+    questionText: "【敬語変換】お客様が事情を「知っている」ことを尊敬語で表現すると？",
+    context: "「存じる」は自分が知っている場合に使います。",
+    options: ["ご存じだ", "存じていらっしゃる"],
     correctAnswer: "ご存じだ",
-    reason: "相手が知っている場合は尊敬語。",
+    reason: "「存じる」は謙譲語なので、相手には使わない。「ご存じ」を使う。",
     visualCue: { direction: 'up', target: '相手' }
   },
   {
     id: 512,
     category: 'verbs',
-    questionText: "「知っている」の謙譲語（自分が↓）は？",
-    options: ["ご存じだ", "存じている"],
+    questionText: "【敬語変換】自分が事情を「知っている」ことを謙譲語で表現すると？",
+    context: "「存じ上げる」などとも言います。",
+    options: ["存じている", "知り置いている"],
     correctAnswer: "存じている",
-    reason: "自分が知っている場合は謙譲語。",
+    reason: "「知り置く」はやや尊大な印象。「存じている」または「存じ上げております」が適切。",
     visualCue: { direction: 'down', target: '自分' }
   }
 ];
 
-export const getRandomQuestions = (count: number): Question[] => {
-  return shuffle([...KEIGO_DB]).slice(0, count);
+// Updated to accept filtering categories
+export const getRandomQuestions = (count: number, categories?: QuestionCategory[]): Question[] => {
+  let pool = [...KEIGO_DB];
+  if (categories && categories.length > 0) {
+    pool = pool.filter(q => categories.includes(q.category));
+  }
+  return shuffle(pool).slice(0, count);
 };
