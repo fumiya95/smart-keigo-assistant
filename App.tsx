@@ -272,13 +272,17 @@ const LearnScreen = ({ onGoHome }: { onGoHome: () => void }) => {
                </div>
                <div className="grid grid-cols-2 gap-3">
                  <div className="bg-white p-3 rounded-lg border border-orange-100 shadow-sm">
-                   <div className="text-[10px] font-bold text-orange-500 mb-1 uppercase tracking-wide">尊敬語 (相手)</div>
+                   <div className="text-[10px] font-bold text-orange-500 mb-1 uppercase tracking-wide flex items-center">
+                     尊敬語 (相手<ArrowUp size={12} className="ml-0.5" />)
+                   </div>
                    <div className="text-sm font-bold text-slate-800 space-y-1">
                      {row.respect.map((r, idx) => <div key={idx}>{r}</div>)}
                    </div>
                  </div>
                  <div className="bg-white p-3 rounded-lg border border-blue-100 shadow-sm">
-                   <div className="text-[10px] font-bold text-blue-500 mb-1 uppercase tracking-wide">謙譲語 (自分)</div>
+                   <div className="text-[10px] font-bold text-blue-500 mb-1 uppercase tracking-wide flex items-center">
+                     謙譲語 (自分<ArrowDown size={12} className="ml-0.5" />)
+                   </div>
                    <div className="text-sm font-bold text-slate-800 space-y-1">
                       {row.humble.map((h, idx) => <div key={idx}>{h}</div>)}
                    </div>
