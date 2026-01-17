@@ -1,29 +1,20 @@
-
-
-# 敬語学習アプリ
-
-## 概要
-このアプリは、社内・社外・三者間での正しい敬語の使い方を学習するためのツールです。`KEIGO_DB` に収録された問題を通じて、尊敬語・謙譲語・丁寧語の適切な使い分けを実践できます。
-
-## 特長
-- **カテゴリ別学習**: 社内対応、三者間対応、お客様対応、呼称・立場、動詞変換
-- **状況把握**: 問題文に【場面】タグを追加し、実務シーンをイメージしやすい
-- **解説付き**: 選択肢ごとの正誤理由で理解を深める
-- **正答率判定**: 90%以上で合格判定
-
-## 使い方
-1. 問題を読み、適切な選択肢を選ぶ  
-2. 回答後に正解と理由を確認  
-3. 正答率が90%以上で学習完了と判定  
-
-## 注意
-- 本アプリでは、誤った敬語は正答として含まれていません  
-- 二重敬語や口語的表現にも注意点を記載済み  
-
-## 技術
-- TypeScript + React などで構築可能  
-- `KEIGO_DB` をインポートして問題表示・判定機能に使用
-
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
+
+# Run and deploy your AI Studio app
+
+This contains everything you need to run your app locally.
+
+View your app in AI Studio: https://ai.studio/apps/drive/1XnAyA1AcybZaZKpfVblmI8K4HnZED421
+
+## Run Locally
+
+**Prerequisites:**  Node.js
+
+
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

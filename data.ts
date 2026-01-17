@@ -80,6 +80,26 @@ export const KEIGO_DB: Question[] = [
     reason: "「参る」はお客様には使わない。「お越しになる」「お見えになる」を使う。",
     visualCue: { direction: 'up', target: '社外の人' }
   },
+  {
+    id: 108,
+    category: 'internal',
+    questionText: "【社内・外出】外出する際、上司に「何かトラブルがあったら携帯に電話してほしい」と伝える時。",
+    context: "「あったら」は少し砕けた表現です。また、依頼の形も丁寧に。",
+    options: ["何かあったら携帯電話に連絡してください", "何かございましたら携帯電話へご連絡ください"],
+    correctAnswer: "何かございましたら携帯電話へご連絡ください",
+    reason: "「あったら」ではなく丁寧語の「ございましたら」を使う。「連絡してください」は命令形だが、緊急時の依頼としては「ご連絡ください」で定着している。",
+    visualCue: { direction: 'down', target: '自分' }
+  },
+  {
+    id: 109,
+    category: 'internal',
+    questionText: "【社内・報告】お客様からのクレーム内容を上司に報告する。「お客様が言うには〜」",
+    context: "「言う」を丁寧な表現に変えます。",
+    options: ["お客様が言うには", "お客様のお話では"],
+    correctAnswer: "お客様のお話では",
+    reason: "「言うには」は敬意に欠ける。「お客様のお話では」や「お客様がおっしゃるには」という表現を使う。",
+    visualCue: { direction: 'up', target: 'お客様' }
+  },
 
   // ② 三者間対応 (Category: three-party)
   {
@@ -251,6 +271,46 @@ export const KEIGO_DB: Question[] = [
     reason: "「お待ち願えますか」よりも「お待ちいただけますでしょうか」の方がより丁寧で柔らかい。",
     visualCue: { direction: 'down', target: '身内' }
   },
+  {
+    id: 315,
+    category: 'client',
+    questionText: "【電話】本題に入る前や、相手に手間をかけさせる時のクッション言葉。「すみませんが」の言い換えは？",
+    context: "「すみません」は謝罪のニュアンスが強く、ビジネスのクッション言葉としては軽いです。",
+    options: ["すみませんが", "恐れ入りますが"],
+    correctAnswer: "恐れ入りますが",
+    reason: "ビジネスシーンでの依頼や問いかけの前置きには「恐れ入りますが」が最も適切で丁寧。",
+    visualCue: { direction: 'down', target: '自分' }
+  },
+  {
+    id: 316,
+    category: 'client',
+    questionText: "【電話】電波が悪く、相手の声が聞き取れなかった時。「もう一度言ってください」の言い換えは？",
+    context: "「言ってください」は命令形です。聞く側の姿勢として許可を求める形にします。",
+    options: ["もう一度おっしゃってください", "もう一度お伺いしてもよろしいでしょうか"],
+    correctAnswer: "もう一度お伺いしてもよろしいでしょうか",
+    reason: "「おっしゃってください」よりも、「（私が）聞いてもいいですか？」と許可を求める「お伺いしてもよろしいでしょうか」の方が相手への配慮が伝わる。",
+    visualCue: { direction: 'down', target: '自分' }
+  },
+  {
+    id: 317,
+    category: 'client',
+    questionText: "【応接室】「担当者がもうすぐ来るので、待っていてほしい」と伝える時。",
+    context: "身内の動作に「来る」は使いません。",
+    options: ["担当者がすぐに来ますので", "担当者がすぐに参りますので"],
+    correctAnswer: "担当者がすぐに参りますので",
+    reason: "身内が「来る」ことは「参る」と表現する。「来ます」は丁寧語だが謙譲語ではないため、お客様に対しては不十分。",
+    visualCue: { direction: 'down', target: '身内' }
+  },
+  {
+    id: 318,
+    category: 'client',
+    questionText: "【電話・社外】取引先に電話をかけ、担当の「田中さん」につないでほしい時。",
+    context: "相手の会社の人を呼び出す場面です。",
+    options: ["営業部の田中さんはいますか", "営業部の田中様はいらっしゃいますでしょうか"],
+    correctAnswer: "営業部の田中様はいらっしゃいますでしょうか",
+    reason: "相手側の人物には「様」をつけ、居るかどうかは尊敬語「いらっしゃる」で尋ねる。「いますか」は失礼。",
+    visualCue: { direction: 'up', target: '相手' }
+  },
 
   // ④ 呼称・立場マスター (Category: terms)
   {
@@ -394,6 +454,46 @@ export const KEIGO_DB: Question[] = [
     correctAnswer: "存じている",
     reason: "「知り置く」はやや尊大な印象。「存じている」または「存じ上げております」が適切。",
     visualCue: { direction: 'down', target: '自分' }
+  },
+  {
+    id: 513,
+    category: 'verbs',
+    questionText: "【敬語変換】お客様が「する」ことを尊敬語で表現すると？",
+    context: "「いたす」は謙譲語です。",
+    options: ["なさる", "なされる"],
+    correctAnswer: "なさる",
+    reason: "「なさる」が尊敬語。「なされる」は二重敬語になりうるため、「なさる」が最もスマートで適切。",
+    visualCue: { direction: 'up', target: '相手' }
+  },
+  {
+    id: 514,
+    category: 'verbs',
+    questionText: "【敬語変換】自分が「する」ことを謙譲語で表現すると？",
+    context: "「なさる」は相手の動作です。",
+    options: ["いたす", "なさる"],
+    correctAnswer: "いたす",
+    reason: "「する」の謙譲語は「いたす」。「よろしくお願いいたします」などで頻出。",
+    visualCue: { direction: 'down', target: '自分' }
+  },
+  {
+    id: 515,
+    category: 'verbs',
+    questionText: "【敬語変換】お客様が椅子に「座る」ことを尊敬語で表現すると？",
+    context: "「お座りになる」は犬のしつけ等のイメージがあるため、ビジネスでは避けます。",
+    options: ["お座りになる", "おかけになる"],
+    correctAnswer: "おかけになる",
+    reason: "「お座りになる」は間違いではないが、幼稚な印象を与える。「おかけになる（腰をかける）」がビジネス標準。",
+    visualCue: { direction: 'up', target: '相手' }
+  },
+  {
+    id: 516,
+    category: 'verbs',
+    questionText: "【敬語変換】お客様が上着を「着ている」ことを尊敬語で表現すると？",
+    context: "「お着になる」とは言いません。",
+    options: ["着られている", "お召しになっている"],
+    correctAnswer: "お召しになっている",
+    reason: "「着る」の尊敬語は「召す（めす）」。衣服だけでなく、食事やお風呂にも使える。",
+    visualCue: { direction: 'up', target: '相手' }
   }
 ];
 
@@ -404,4 +504,19 @@ export const getRandomQuestions = (count: number, categories?: QuestionCategory[
     pool = pool.filter(q => categories.includes(q.category));
   }
   return shuffle(pool).slice(0, count);
+};
+
+// New function for the Test Mode requirements
+export const getTestQuestions = (): Question[] => {
+  const allQuestions = [...KEIGO_DB];
+  // 1. Get 3 random questions from 'verbs' category
+  const verbQuestions = shuffle(allQuestions.filter(q => q.category === 'verbs')).slice(0, 3);
+  
+  // 2. Get 7 random questions from the REST (excluding the selected verbs)
+  // Ensure we don't pick the same verb questions again
+  const remainingQuestions = allQuestions.filter(q => !verbQuestions.includes(q));
+  const otherQuestions = shuffle(remainingQuestions).slice(0, 7);
+  
+  // 3. Combine them: First 3 are verbs, next 7 are random
+  return [...verbQuestions, ...otherQuestions];
 };
