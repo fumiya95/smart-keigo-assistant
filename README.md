@@ -16,14 +16,6 @@
 2. 回答後に正解と理由を確認  
 3. 正答率が90%以上で学習完了と判定  
 
-## 注意
-- 本アプリでは、誤った敬語は正答として含まれていません  
-- 二重敬語や口語的表現にも注意点を記載済み  
-
-## 技術
-- TypeScript + React などで構築可能  
-- `KEIGO_DB` をインポートして問題表示・判定機能に使用
-
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
